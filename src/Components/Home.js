@@ -2,34 +2,25 @@ import React, { useEffect, useState } from "react";
 import Api from "../Api";
 
 import Header from "./Header";
-
-
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listBooks } from "../actions/bookActions";
 
 
-export default ()=>{
+export const Home=()=>{
 
-    let [books, setBooks] = useState([]);
+    const dispatch = useDispatch();
 
-    let api = new Api();
-
-    let allboks = async()=>{
-        let rez = await api.getAllBooks();
-
-        if(rez != 0){
-            setBooks(rez);
-        }
-    }
+    const bookList = useSelector(state=>state.books);
+    const {loading, error, books} = bookList;
 
     useEffect(()=>{
-
-        allboks();
-
-    },[]);
+        dispatch(listBooks());
+    },[dispatch])
 
     return (
         <>
-        <Header/>
+        {/* <Header/>
         <main>
             <table>
                 <thead>
@@ -42,7 +33,7 @@ export default ()=>{
                 </thead>
                 <tbody>
                   {
-                      books.map(e=>{
+                      products.map(e=>{
                         return <tr key={e.id}>
                                 <td><Link className="title-link" to={`/update/${e.id}`}>{e.title}</Link></td>
                                 <td>{e.author}</td>
@@ -53,8 +44,10 @@ export default ()=>{
                   }
                 </tbody>
         </table>
-    </main>
+    </main> */}
+
+    <div>CEVA</div>
     
-</>
+        </>
     );
 }

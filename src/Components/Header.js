@@ -1,8 +1,6 @@
 import React  from "react";
-import NewBook from "./NewBook";
-
-
 import { Link } from "react-router-dom";
+
 export default ()=>{
 
     return(

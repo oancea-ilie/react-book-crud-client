@@ -1,14 +1,14 @@
 import React from 'react'
-import Header from './Components/Header'
-import Home from './Components/Home'
-
+import {Home} from './Components/Home'
 import NewBook from './Components/NewBook'
 
-import {BrowserRouter as Router,Switch,Route} from "react-router-dom"
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom" // pentru a seta paginatia site-ului.
 import Update from './Components/Update'
+import { Register } from './Components/Register'
+import { Login } from './Components/Login'
 
 
-export default ()=>{
+const App=()=>{
 
   return(
        <Router>
@@ -18,9 +18,15 @@ export default ()=>{
                     <Route exact path="/add-book"><NewBook/></Route>
 
                     <Route exact path="/update/:bookId"><Update/></Route>
+
+                    <Route exact path="/login"><Login/></Route>
+
+                    <Route exact path="/register"><Register/></Route>
+
               </Switch>
        </Router>
   )
 
-
 }
+
+export default App;

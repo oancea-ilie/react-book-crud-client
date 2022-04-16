@@ -105,5 +105,59 @@ export default class Api{
         }
         
     }
+
+
+    async getAllCustomers(){
+        try{
+            const rez = await this.api('http://localhost:5000/api/v1/customers');
+
+            if(rez.status === 200){
+                return rez.json();
+            }else{
+                return 0;
+            }
+
+        }catch(e){
+            throw new Error(e);
+        }
+        
+    }
+
+    async getCustomerById(id){
+        try{
+            const rez = await this.api(`http://localhost:5000/api/v1/customers/${id}`);
+
+            if(rez.status === 200){
+                return rez.json();
+            }else{
+                const data = await rez.json();
+                return data.error;
+            }
+
+        }catch(e){
+            throw new Error(e);
+        }
+        
+    }
+
+    async addCustomer(newBook){
+        try{
+            const rez = await this.api(`http://localhost:5000/api/v1/customers`,'POST', newBook);
+            
+            if(rez.status === 204){
+                return "success";
+
+            }else{
+                const data = await rez.json();
+                return data.error;
+            }
+
+         }catch(e){
+           
+            throw new Error(e);
+         }
+        
+    }
+
     
 }

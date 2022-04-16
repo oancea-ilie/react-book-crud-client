@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Api from "../Api";
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Home from "./Home";
 
 export default ()=>{
 
@@ -16,15 +15,15 @@ export default ()=>{
 
     let [err,setErrors]=useState([]);
 
-    const history=useHistory();
+    const history = useHistory();
 
-    let{bookId}=useParams();
+    let{bookId} = useParams(); // luam id-ul trimis din parametrii de la home
 
     let api = new Api();
     
     let getBook=async(id)=>{
         let book = await api.getBookById(id);
-        
+
         setTitle(book.title);
         setAuthor(book.author);
         setGenre(book.genre);
@@ -39,7 +38,6 @@ export default ()=>{
     },[]);
 
     useEffect(()=>{
-
         check();
 
     },[title,author,genre,year]);
@@ -87,6 +85,7 @@ export default ()=>{
            }));
        }
 
+       console.log(err);
     }
 
     let updateHandle=async()=>{
@@ -101,7 +100,7 @@ export default ()=>{
                 year: year
             }
     
-            let rez = await api.updateBook(ob, bookId);
+            await api.updateBook(ob, bookId);
     
             history.push("/");
         }else{
@@ -123,34 +122,34 @@ export default ()=>{
         }
     }
 
-
+    
     return(
         <section className="add-main">
-        <h1>Update Book</h1>
-        <div className="add-container" onChange={onChangeHandler}>
-            <div className="input-card">
-                <p>Title</p>
-                <input type="text" className="title" defaultValue={title} />
-            </div>
-            <div className="input-card">
-                <p>Author</p>
-                <input type="text" className="author" defaultValue={author}/>
-            </div>
-            <div className="input-card">
-                <p>Genre</p>
-                <input type="text" className="genre" defaultValue={genre}/>
-            </div>
-            <div className="input-card">
-                <p>Year</p>
-                <input type="text" className="year" defaultValue={year}/>
-            </div>
+            <h1>Update Book</h1>
+            <div className="add-container" onChange={onChangeHandler}>
+                <div className="input-card">
+                    <p>Title</p>
+                    <input type="text" className="title" defaultValue={title} />
+                </div>
+                <div className="input-card">
+                    <p>Author</p>
+                    <input type="text" className="author" defaultValue={author}/>
+                </div>
+                <div className="input-card">
+                    <p>Genre</p>
+                    <input type="text" className="genre" defaultValue={genre}/>
+                </div>
+                <div className="input-card">
+                    <p>Year</p>
+                    <input type="text" className="year" defaultValue={year}/>
+                </div>
 
-            <div className="btns">
-                <a href="#" className="update-book" onClick={updateHandle}>Update Book</a>
-                <Link to="/" className="cancel">Cancel</Link>
-                <a href="#"  className="delete-book"onClick={deleteHandle} >Delete Book</a>
+                <div className="btns">
+                    <a href="#" className="update-book" onClick={updateHandle}>Update Book</a>
+                    <Link to="/" className="cancel">Cancel</Link>
+                    <a href="#"  className="delete-book"onClick={deleteHandle} >Delete Book</a>
+                </div>
             </div>
-        </div>
     </section>
     );
 }

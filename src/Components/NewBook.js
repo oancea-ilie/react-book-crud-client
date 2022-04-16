@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom"; 
+// Link pentru a crea un link si useHistory pentru a putea facem back to home
+
 import Api from "../Api";
 
 export default ()=>{
 
-    let [tile,setTitle]=useState("");
+    let [tile,setTitle] = useState(""); // retinem intr-un state title si toate propietatiile
 
     let [author, setAuthor] = useState("");
 
@@ -15,8 +17,9 @@ export default ()=>{
     let [err,setErrors]=useState([]);
 
 
-    const history=useHistory();
-    useEffect(()=>{
+    const history = useHistory(); // cream history pentru back to home page
+
+    useEffect(()=>{ // apela funcia check de ficare data cand se modifica title, author etc, si retinem starea.
 
         check();
 
@@ -25,12 +28,12 @@ export default ()=>{
 
     let check=()=>{
         
-        setErrors([]);
+        setErrors([]); // setam err goala si o umplem in functie de erorile pe care le avem.
 
        if(tile == ""){
           setErrors((prev=>{
-               return [...prev,"title is required" ];
-          }));
+            return [...prev,"title is required" ];
+       }));
        }
 
        if(author == ""){
@@ -54,7 +57,7 @@ export default ()=>{
     let onChangeHandler=(e)=>{
         e.preventDefault();
 
-        let obj=e.target;
+        let obj = e.target;
 
         if(obj.classList.contains("title")){
             setTitle(obj.value);
@@ -72,30 +75,27 @@ export default ()=>{
 
         check();
 
-        if(err.length==0){
+        if(err.length == 0){
         
-        let obj ={
-            title: tile,
-            author: author,
-            genre : genre,
-            year: year
-        }
+            let obj ={
+                title: tile,
+                author: author,
+                genre : genre,
+                year: year
+            }
 
-        let api = new Api();
-        let rez = await api.addBook(obj);
+            let api = new Api();
+            let rez = await api.addBook(obj);
 
-        if(rez == 'success'){
-            history.push("/");
+            if(rez == 'success'){
+                history.push("/"); // returnare catre home
+            }else{
+                alert(rez.message);
+            }
+            
         }else{
-            alert(rez.message);
+            err.forEach(e=>alert(e));
         }
-
-
-     }else{
-        
-        err.forEach(e=>alert(e));
-         
-     }
 
 
     }
