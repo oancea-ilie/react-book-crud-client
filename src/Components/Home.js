@@ -11,16 +11,19 @@ export const Home=()=>{
 
     const dispatch = useDispatch();
 
-    const bookList = useSelector(state=>state.books);
+    const bookList = useSelector(state=>state.bookList);
+
     const {loading, error, books} = bookList;
 
     useEffect(()=>{
         dispatch(listBooks());
+
+        console.log(books);
     },[dispatch])
 
     return (
         <>
-        {/* <Header/>
+        <Header/>
         <main>
             <table>
                 <thead>
@@ -33,7 +36,8 @@ export const Home=()=>{
                 </thead>
                 <tbody>
                   {
-                      products.map(e=>{
+                    books && 
+                      books.map(e=>{
                         return <tr key={e.id}>
                                 <td><Link className="title-link" to={`/update/${e.id}`}>{e.title}</Link></td>
                                 <td>{e.author}</td>
@@ -44,10 +48,7 @@ export const Home=()=>{
                   }
                 </tbody>
         </table>
-    </main> */}
-
-    <div>CEVA</div>
-    
+    </main>
         </>
     );
 }

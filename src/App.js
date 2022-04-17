@@ -1,6 +1,6 @@
 import React from 'react'
 import {Home} from './Components/Home'
-import NewBook from './Components/NewBook'
+import {NewBook} from './Components/NewBook'
 
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom" // pentru a seta paginatia site-ului.
 import Update from './Components/Update'

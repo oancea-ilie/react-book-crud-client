@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom"; 
+import { AddBooks } from "../actions/bookActions";
 // Link pentru a crea un link si useHistory pentru a putea facem back to home
 
-import Api from "../Api";
-
-export default ()=>{
+export const NewBook=()=>{
 
     let [tile,setTitle] = useState(""); // retinem intr-un state title si toate propietatiile
 
@@ -16,6 +16,11 @@ export default ()=>{
 
     let [err,setErrors]=useState([]);
 
+    let dispatch = useDispatch();
+
+    const State = useSelector(state=>state.bookAdd);
+
+    const {error, book} = State;
 
     const history = useHistory(); // cream history pentru back to home page
 
@@ -84,14 +89,8 @@ export default ()=>{
                 year: year
             }
 
-            let api = new Api();
-            let rez = await api.addBook(obj);
 
-            if(rez == 'success'){
-                history.push("/"); // returnare catre home
-            }else{
-                alert(rez.message);
-            }
+            dispatch(AddBooks(obj));
             
         }else{
             err.forEach(e=>alert(e));
@@ -99,6 +98,27 @@ export default ()=>{
 
 
     }
+
+
+    useEffect(()=>{
+        if(book){
+            console.log(book);
+        }else{
+            console.log('nu este carte');
+        }
+        if(error){
+            console.log(error);
+        }else{
+            console.log('nu e eroare');
+
+        }
+    },[book, error])
+
+
+
+
+
+
 
     return(
         <section className="add-main">
